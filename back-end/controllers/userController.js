@@ -1,5 +1,5 @@
 import User from '../models/userModel.js';
-import { createAccessToken, createRefreshToken } from '../services/tokenService.js';
+import { createAccessToken, createRefreshToken, verifyAccessToken, verifyRefreshToken } from '../services/tokenService.js';
 import pkg from 'mongodb';
 const { ObjectId } = pkg;
 
@@ -19,7 +19,7 @@ export const userLogin = async (req, res) => {
 
         res.cookie('refreshtoken', refreshToken, {
             httpOnly: true,
-            path: '/api/refresh_token',
+            path: '/api/user/refresh-token',
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
 
@@ -79,3 +79,37 @@ export const userProfile = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 }
+
+export const refreshToken = async (req, res) => {
+    try {
+      // Lấy refreshToken từ cookie
+      const refreshToken = req.cookies.refreshtoken;
+  
+      // Kiểm tra xem refreshToken có tồn tại không
+      if (!refreshToken) {
+        return res.status(401).json({ message: 'No refresh token provided' });
+      }
+  
+      // Xác thực refreshToken và lấy thông tin người dùng
+      const decoded = verifyRefreshToken(refreshToken); // Kiểm tra tính hợp lệ của refreshToken
+  
+      // Lấy thông tin người dùng từ cơ sở dữ liệu hoặc cache
+      const currentUser = await User.findById(decoded.id); // Dùng ID đã giải mã từ refreshToken
+  
+      // Kiểm tra xem người dùng có tồn tại không
+      if (!currentUser) {
+        return res.status(403).json({ message: 'User not found' });
+      }
+  
+      // Tạo accessToken mới
+      const accessToken = createAccessToken({ id: currentUser._id });
+  
+      // Trả về accessToken mới cho client
+      return res.json({ accessToken });
+      
+    } catch (error) {
+      console.error(error);
+      // Xử lý lỗi khi refresh token không hợp lệ hoặc gặp lỗi bất ngờ
+      return res.status(500).json({ message: 'Something went wrong' });
+    }
+  };

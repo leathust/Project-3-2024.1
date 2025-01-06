@@ -5,7 +5,7 @@ import BoxPlotChart from "../../components/BoxPlotChart";
 const BoxPlot = () => {
   return (
     <Box m="20px">
-      <Header title="Box Plot" subtitle="Box Plot với 4 thuộc tính giá trị số" />
+      <Header title="Box Plot" subtitle="Box Plot with numeric features" />
       <Box height="75vh">
         <BoxPlotChart />
       </Box>

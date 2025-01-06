@@ -6,7 +6,7 @@ import DonutChart from "../../components/DonutChart";
 const Pie = () => {
   return (
     <Box m="20px">
-      <Header title="Pie Chart" subtitle="Biểu đồ thể hiện so sánh yes-no của dữ liệu" />
+      <Header title="Pie Chart" subtitle="The chart shows a yes-no comparison of the data" />
       <Box height="75vh">
         <DonutChart />
       </Box>

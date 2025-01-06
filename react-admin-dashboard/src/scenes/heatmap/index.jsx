@@ -5,7 +5,7 @@ import HeatmapChart from "../../components/HeatMapChart";
 const HeatMap = () => {
   return (
     <Box m="20px">
-      <Header title="Heat Map Chart" subtitle="Biểu đồ thể hiện mối tương quan tuyến tính giữa một vài thuộc tính quan trọng" />
+      <Header title="Heat Map" subtitle="The graph shows the linear correlation between several features" />
       <Box height="75vh">
         <HeatmapChart />
       </Box>
