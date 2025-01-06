@@ -1,0 +1,20 @@
+/* CSS cho vòng tròn và văn bản phần trăm */
+.circle-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  transform: rotate(0deg); /* Đảm bảo vòng tròn bắt đầu từ điểm 12 giờ */
+}
+
+.percentage-text {
+  position: absolute;
+  font-size: 18px;
+  font-weight: bold;
+  /* color: #333; */
+}
